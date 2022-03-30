@@ -34,7 +34,7 @@
 ```sh
 make -f Makefile_cn
 ```
-
+可以使用中文，示例为李彦宏的简历。
 
 ## What is Awesome CV?
 
