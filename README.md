@@ -29,6 +29,12 @@
 </div>
 
 <br />
+## 中文版本
+使用
+```sh
+make -f Makefile_cn
+```
+
 
 ## What is Awesome CV?
 

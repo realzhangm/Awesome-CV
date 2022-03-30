@@ -81,6 +81,9 @@
 \RequirePackage{parskip}
 % Needed to deal hyperlink
 \RequirePackage[hidelinks,unicode]{hyperref}
+% ctex is needed
+\RequirePackage[UTF8]{ctex}
+
 \hypersetup{%
   pdftitle={},
   pdfauthor={},
@@ -102,7 +105,7 @@
 %-------------------------------------------------------------------------------
 %% Page Layout
 % Configure page margins with geometry
-\geometry{left=2.0cm, top=1.5cm, right=2.0cm, bottom=2.0cm, footskip=.5cm}
+\geometry{left=3.5cm, top=1.5cm, right=6.5cm, bottom=2.0cm, footskip=.5cm}
 
 %% Header & Footer
 % Set offset to each header and footer
@@ -152,8 +155,8 @@
 \setbool{acvSectionColorHighlight}{true}
 
 % Awesome section color
-\def\@sectioncolor#1#2#3{%
-  \ifbool{acvSectionColorHighlight}{{\color{awesome}#1#2#3}}{#1#2#3}%
+\def\@sectioncolor{%
+  \ifbool{acvSectionColorHighlight}{{\color{awesome}}}{}%
 }
 
 
@@ -186,16 +189,16 @@
 %-------------------------------------------------------------------------------
 % Configure styles for each CV elements
 % For fundamental structures
-\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{graytext} #1}}
-\newcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{text} #1}}
+\newcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{text} #1}}
+\newcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{text} #1}}
 \newcommand*{\headerpositionstyle}[1]{{\fontsize{7.6pt}{1em}\bodyfont\scshape\color{awesome} #1}}
 \newcommand*{\headeraddressstyle}[1]{{\fontsize{8pt}{1em}\headerfont\itshape\color{lighttext} #1}}
 \newcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{text} #1}}
 \newcommand*{\headerquotestyle}[1]{{\fontsize{9pt}{1em}\bodyfont\itshape\color{darktext} #1}}
 \newcommand*{\footerstyle}[1]{{\fontsize{8pt}{1em}\footerfont\scshape\color{lighttext} #1}}
-\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\@sectioncolor #1}}
+\newcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\color{text}\color{awesome} #1}}
 \newcommand*{\subsectionstyle}[1]{{\fontsize{12pt}{1em}\bodyfont\scshape\textcolor{text}{#1}}}
-\newcommand*{\paragraphstyle}{\fontsize{9pt}{1em}\bodyfontlight\upshape\color{text}}
+\newcommand*{\paragraphstyle}{\fontsize{10pt}{1em}\bodyfontlight\upshape\color{text}}
 
 % For elements of entry
 \newcommand*{\entrytitlestyle}[1]{{\fontsize{10pt}{1em}\bodyfont\bfseries\color{darktext} #1}}
@@ -279,6 +282,10 @@
 % Usage: \email{<email address>}
 \newcommand*{\email}[1]{\def\@email{#1}}
 
+% Defines writer's weixin (optional)
+% Usage: \weixin{<weixin address>}
+\newcommand*{\weixin}[1]{\def\@weixin{#1}}
+
 % Defines writer's date of birth (optional)
 % Usage: \dateofbirth{<date>}
 \newcommand*{\dateofbirth}[1]{\def\@dateofbirth{#1}}
@@ -290,10 +297,6 @@
 % Defines writer's github (optional)
 % Usage: \github{<github-nick>}
 \newcommand*{\github}[1]{\def\@github{#1}}
-
-% Defines writer's weixin (optional)
-% Usage: \weixin{<weixin-nick>}
-\newcommand*{\weixin}[1]{\def\@weixin{#1}}
 
 % Defines writer's gitlab (optional)
 % Usage: \gitlab{<gitlab-nick>}
@@ -493,6 +496,12 @@
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
           \href{mailto:\@email}{\faEnvelope\acvHeaderIconSep\@email}%
         }%
+      \ifthenelse{\isundefined{\@weixin}}%
+        {}%
+        {%
+          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
+          \href{weixin://\@weixin}{\faWeixin\acvHeaderIconSep\@weixin}%
+        }%
       \ifthenelse{\isundefined{\@dateofbirth}}%
         {}%
         {%
@@ -512,12 +521,6 @@
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
           \href{https://github.com/\@github}{\faGithubSquare\acvHeaderIconSep\@github}%
         }%
-      \ifthenelse{\isundefined{\@weixin}}%
-        {}%
-        {%
-          \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{weixin://\@weixin}{\faWeiXin\acvHeaderIconSep\@weixin}%
-        }%        
       \ifthenelse{\isundefined{\@gitlab}}%
         {}%
         {%
